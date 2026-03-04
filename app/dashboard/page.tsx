@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Search, Filter, Columns, Plus, Ban, TriangleAlert } from "lucide-react";
 
@@ -18,6 +18,9 @@ export default function DashboardPage() {
     const router = useRouter();
     const [searchQuery, setSearchQuery] = useState("");
     const [isLoading, setIsLoading] = useState(true);
+    const [isFilterOpen, setIsFilterOpen] = useState(false);
+    const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
+    const filterRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -26,10 +29,37 @@ export default function DashboardPage() {
         return () => clearTimeout(timer);
     }, []);
 
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (filterRef.current && !filterRef.current.contains(event.target as Node)) {
+                setIsFilterOpen(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+    const scanStatuses = ["Completed", "Running", "Scheduled", "Failed"];
+
+    const toggleStatusFilter = (status: string) => {
+        setSelectedStatuses(prev =>
+            prev.includes(status)
+                ? prev.filter(s => s !== status)
+                : [...prev, status]
+        );
+    };
+
     const filteredScans = mockScans.filter(
-        (scan) =>
-            scan.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            scan.type.toLowerCase().includes(searchQuery.toLowerCase())
+        (scan) => {
+            const matchesSearch = scan.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                scan.type.toLowerCase().includes(searchQuery.toLowerCase());
+
+            const matchesStatus = selectedStatuses.length === 0 || selectedStatuses.includes(scan.status);
+
+            return matchesSearch && matchesStatus;
+        }
     );
 
     if (isLoading) {
@@ -129,9 +159,51 @@ export default function DashboardPage() {
                         />
                     </div>
                     <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 w-full sm:w-auto">
-                        <Button variant="outline" className="flex-1 sm:flex-none gap-2 h-10 cursor-pointer border border-neutral-200 dark:border-neutral-700 rounded-md">
-                            <Filter className="h-4 w-4" /> Filter
-                        </Button>
+                        <div className="relative flex-1 sm:flex-none" ref={filterRef}>
+                            <Button
+                                variant="outline"
+                                className={cn("w-full gap-2 h-10 cursor-pointer border border-neutral-200 dark:border-neutral-700 rounded-md", isFilterOpen && "bg-neutral-100 dark:bg-neutral-800")}
+                                onClick={() => setIsFilterOpen(!isFilterOpen)}
+                            >
+                                <Filter className="h-4 w-4" /> Filter
+                                {selectedStatuses.length > 0 && (
+                                    <span className="ml-1 rounded-full bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400 px-2 py-0.5 text-xs font-medium">
+                                        {selectedStatuses.length}
+                                    </span>
+                                )}
+                            </Button>
+
+                            {isFilterOpen && (
+                                <div className="absolute top-full left-0 right-0 sm:right-auto sm:left-0 mt-2 w-full sm:w-48 bg-white dark:bg-[#161a21] border border-neutral-200 dark:border-neutral-700 rounded-lg shadow-lg z-10 p-2 py-3 overflow-hidden">
+                                    <div className="px-2 mb-2">
+                                        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Status</p>
+                                    </div>
+                                    <div className="space-y-1">
+                                        {scanStatuses.map(status => (
+                                            <label key={status} className="flex items-center gap-2 px-2 py-1.5 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-md cursor-pointer transition-colors">
+                                                <input
+                                                    type="checkbox"
+                                                    className="rounded border-gray-300 text-teal-600 focus:ring-teal-500 bg-white dark:bg-neutral-900"
+                                                    checked={selectedStatuses.includes(status)}
+                                                    onChange={() => toggleStatusFilter(status)}
+                                                />
+                                                <span className="text-sm dark:text-neutral-200">{status}</span>
+                                            </label>
+                                        ))}
+                                    </div>
+                                    {selectedStatuses.length > 0 && (
+                                        <div className="mt-3 pt-2 border-t border-neutral-200 dark:border-neutral-700 px-2">
+                                            <button
+                                                className="text-xs text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300 font-medium w-full text-left"
+                                                onClick={() => setSelectedStatuses([])}
+                                            >
+                                                Clear all filters
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+                        </div>
                         <Button variant="outline" className="flex-1 sm:flex-none gap-2 h-10 cursor-pointer border border-neutral-200 dark:border-neutral-700 rounded-md">
                             <Columns className="h-4 w-4" /> Column
                         </Button>

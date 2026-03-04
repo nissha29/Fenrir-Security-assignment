@@ -103,14 +103,16 @@ export default function LoginPage() {
             </form>
 
             <div className="flex gap-4 mt-8">
-              <Button variant="outline" className="flex-1 h-12 rounded-full border-gray-200 bg-black hover:bg-black/90 text-white p-0">
+              <Button variant="outline" className="flex-1 h-12 rounded-full border-gray-200 bg-black hover:bg-black/90 text-white p-0 hover:cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16.365 21.493c-1.396 0-1.896-.867-3.414-.867-1.488 0-1.924.867-3.444.867-2.91 0-6.19-2.85-6.19-7.97 0-4.04 2.1-6.42 4.96-6.42 1.69 0 2.82.91 3.51.91.73 0 1.96-.91 3.86-.91 1.09 0 3.83.2 5.09 2.51-4.14 2.15-3.32 7.57.8 9.3-.96 1.77-1.99 3.42-3.13 3.42zm-5.07-16.7c-.12-2.32 1.95-4.22 4-4.32.22 2.37-2.16 4.39-4 4.32z" /></svg>
               </Button>
-              <Button variant="outline" className="flex-1 h-12 rounded-full border-gray-200 hover:bg-gray-50 bg-[#F9F5F1] p-0">
+              <Button variant="outline" className="flex-1 h-12 rounded-full border-gray-200 hover:bg-gray-50! bg-gray-50! p-0 hover:cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z" /><path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z" /><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238C29.211 35.091 26.715 36 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z" /><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303c-.792 2.237-2.231 4.166-4.087 5.571-.008-.008-.016-.016-.023-.024l6.19 5.238C40.697 35.341 44 30.17 44 24c0-1.341-.138-2.65-.389-3.917z" /></svg>
               </Button>
-              <Button variant="outline" className="flex-1 h-12 rounded-full border-gray-200 bg-[#4267B2] hover:bg-[#4267B2]/90 text-white p-0">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
+              <Button variant="outline" className="flex-1 h-12 rounded-full border-gray-200 bg-[#4267B2]! hover:bg-[#4267B2]!/90 text-white p-0 hover:cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-meta" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M8.217 5.243C9.145 3.988 10.171 3 11.483 3 13.96 3 16 6.153 16.001 9.907c0 2.29-.986 3.725-2.757 3.725-1.543 0-2.395-.866-3.924-3.424l-.667-1.123-.118-.197a55 55 0 0 0-.53-.877l-1.178 2.08c-1.673 2.925-2.615 3.541-3.923 3.541C1.086 13.632 0 12.217 0 9.973 0 6.388 1.995 3 4.598 3q.477-.001.924.122c.31.086.611.22.913.407.577.359 1.154.915 1.782 1.714m1.516 2.224q-.378-.615-.727-1.133L9 6.326c.845-1.305 1.543-1.954 2.372-1.954 1.723 0 3.102 2.537 3.102 5.653 0 1.188-.39 1.877-1.195 1.877-.773 0-1.142-.51-2.61-2.87zM4.846 4.756c.725.1 1.385.634 2.34 2.001A212 212 0 0 0 5.551 9.3c-1.357 2.126-1.826 2.603-2.581 2.603-.777 0-1.24-.682-1.24-1.9 0-2.602 1.298-5.264 2.846-5.264q.137 0 .27.018" />
+                </svg>
               </Button>
             </div>
           </div>
